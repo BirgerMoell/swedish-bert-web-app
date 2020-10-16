@@ -37,8 +37,7 @@ async def ner_response(textRequest: TextRequest):
     #print("inside with item", textRequest)
     languageModel = LanguageModel(pipeline('ner', model='KB/bert-base-swedish-cased-ner', tokenizer='KB/bert-base-swedish-cased-ner', ignore_labels=[]))
     response = languageModel.named_entity_recognition(textRequest.text)
-    print(response)
-
+    #print(response)
     return {
         "text": response }
 
