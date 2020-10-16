@@ -19,6 +19,9 @@ cd backend
 uvicorn main:app --reload --port 8020
 ```
 
+This should make everything work and your web app shuld be live at 
+localhost:3000 (or another port you decide).
+
 ## Language model
 ```python
 class LanguageModel:
@@ -68,3 +71,32 @@ async def ner_response(textRequest: TextRequest):
 ```
 
 The webserver creates a language model and runs inference onit and sends the response back to the client.
+
+## Frontend code
+```js
+
+async function namedEntityRecognition(text) {
+  let data = {
+    text: text
+  }
+
+  let response = await fetch("http://localhost:8020/ner", 
+    {
+    method: "POST",
+    contentType: "application/json",
+    body: JSON.stringify(data)
+  })
+
+  let responseJson = await response.json()
+
+  console.log("the response json", responseJson)
+
+  if (responseJson && responseJson.text) {
+    setNer(responseJson.text)
+  }
+
+  return responseJson
+}
+```
+
+The fronten code sends a requests to the backend and displays the result.
